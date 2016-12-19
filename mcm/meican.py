@@ -31,4 +31,4 @@ class Formatter:
 
     @classmethod
     def json_data(self, data):
-        return json.dumps(data, ensure_ascii=False, indent=2)
+        return json.dumps(data, ensure_ascii=False, indent=2).encode("utf8")
