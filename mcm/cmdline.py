@@ -16,7 +16,7 @@ def execute(argv=None):
     args = parser.parse_args(argv)
     username = args.username
     password = args.password
-    print Formatter.json_data(Session(username, password).calendar_items())
+    print Formatter.json_data(Session(username, password).order())
 
 
 if __name__ == '__main__':
