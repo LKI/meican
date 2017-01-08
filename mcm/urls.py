@@ -1,7 +1,11 @@
 # coding=utf-8 #
 
+from __future__ import unicode_literals
+
 import datetime
 import time
+
+from utils import milli_to_datetime
 
 one_week = datetime.timedelta(weeks=1)
 
@@ -36,8 +40,7 @@ def calender_items_url():
 
 def restaurants_url(tab):
     uid = tab['userTab']['uniqueId']
-    target_time = (datetime.datetime(1970, 1, 1) + datetime.timedelta(milliseconds=tab["targetTime"])) \
-        .replace(hour=int(tab["openingTime"]["closeTime"][:2]))
+    target_time = milli_to_datetime(tab["targetTime"]).replace(hour=int(tab["openingTime"]["closeTime"][:2]))
     data = {
         "tabUniqueId": uid,
         "targetTime": target_time,
