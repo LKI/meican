@@ -13,16 +13,16 @@
 # 安装
 
 ```
-    git clone git@github.com:LKI/mcm.git ~/.mcm && cd ~/.mcm && pip install -r requirements.txt
-    ln -sf ~/.mcm/mcm/cmdline.py /usr/bin/mcm
+git clone git@github.com:LKI/mcm.git ~/.mcm && cd ~/.mcm && pip install -r requirements.txt
+ln -sf ~/.mcm/mcm/cmdline.py /usr/bin/mcm
 ```
 
 
 # 目前支持的命令
 
 ```
-    mcm -u <me@liriansu.com> -p <hunter2>  # 查询下次可以点的菜
-    mcm -u <me@liriansu.com> -p <hunter2> -o 香酥  # 点香酥鸡腿
+mcm -u <me@liriansu.com> -p <hunter2>  # 查询下次可以点的菜
+mcm -u <me@liriansu.com> -p <hunter2> -o 香酥  # 点香酥鸡腿
 ```
 
 
