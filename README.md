@@ -8,3 +8,28 @@
 :ghost: 懒人们！
 
 快快使用本Python脚本解放双手来美餐点餐吧~
+
+
+# 安装
+
+```
+    git clone git@github.com:LKI/mcm.git ~/.mcm && cd ~/.mcm && pip install -r requirements.txt
+    ln -sf ~/.mcm/mcm/cmdline.py /usr/bin/mcm
+```
+
+
+# 目前支持的命令
+
+```
+    mcm -u <me@liriansu.com> -p <hunter2>  # 查询下次可以点的菜
+    mcm -u <me@liriansu.com> -p <hunter2> -o 香酥  # 点香酥鸡腿
+```
+
+
+# TODOs
+
+* 取消订单
+* 支持配置用户名/密码/自动查询公司uid
+* 记录自己喜欢吃的
+* 登陆pypi
+
