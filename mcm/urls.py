@@ -46,3 +46,26 @@ def restaurants_url(tab):
         "targetTime": target_time,
     }
     return get_url("preorder/api/v2.1/restaurants/list?{}".format(meican_params(data)))
+
+
+def order_url(tab, dish_id, address_uid):
+    target_time = "{}+{}".format(milli_to_datetime(tab['targetTime']), tab['openingTime']['closeTime'])
+    order_string = "%5B%7B%22count%22:1,%22dishId%22:{}%7D%5D".format(dish_id)
+    data = {
+        "corpAddressUniqueId": address_uid,
+        "order": order_string,
+        "tabUniqueId": tab['userTab']['uniqueId'],
+        "targetTime": target_time,
+        "userAddressUniqueId": address_uid,
+    }
+    return get_url("preorder/api/v2.1/orders/add?" + meican_params(data))
+
+
+def restaurant_dishes_url(tab, restaurant_uid, ):
+    target_time = "{}+{}".format(milli_to_datetime(tab['targetTime']), tab['openingTime']['closeTime'])
+    data = {
+        "restaurantUniqueId": restaurant_uid,
+        "tabUniqueId": tab['userTab']['uniqueId'],
+        "targetTime": target_time,
+    }
+    return get_url("preorder/api/v2.1/restaurants/show?" + meican_params(data))

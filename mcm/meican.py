@@ -5,12 +5,12 @@ import json
 
 import requests
 
-from urls import login_url, calender_items_url, restaurants_url, get_url, meican_params
-from utils import milli_to_datetime
+from urls import (
+    login_url, calender_items_url, restaurants_url, order_url, restaurant_dishes_url)
 
-favorite = "af5431"
+favorite = "af5431"  # 鑫吉餐厅
 
-address_uid = "e7b93aafd597"
+address_uid = "e7b93aafd597"  # 再惠
 
 
 class Session:
@@ -43,14 +43,7 @@ class Session:
 
     def list_dish(self, index=0):
         tab = self.available_tabs()[index]
-        target_time = "{}+{}".format(milli_to_datetime(tab['targetTime']), tab['openingTime']['closeTime'])
-        data = {
-            "restaurantUniqueId": favorite,
-            "tabUniqueId": tab['userTab']['uniqueId'],
-            "targetTime": target_time,
-        }
-        return json.loads(self.query(
-            "get", get_url("preorder/api/v2.1/restaurants/show?" + meican_params(data))).content)['dishList']
+        return json.loads(self.query("get", restaurant_dishes_url(tab, favorite)).content)['dishList']
 
     def available_tabs(self):
         return reduce(lambda x, y: x + y, [filter(lambda x: x['status'] == 'AVAILABLE', _['calendarItemList'])
@@ -58,13 +51,4 @@ class Session:
 
     def order(self, dish_id, index=0):
         tab = self.available_tabs()[index]
-        target_time = "{}+{}".format(milli_to_datetime(tab['targetTime']), tab['openingTime']['closeTime'])
-        order_string = "%5B%7B%22count%22:1,%22dishId%22:{}%7D%5D".format(dish_id)
-        data = {
-            "corpAddressUniqueId": address_uid,
-            "order": order_string,
-            "tabUniqueId": tab['userTab']['uniqueId'],
-            "targetTime": target_time,
-            "userAddressUniqueId": address_uid,
-        }
-        return self.query("post", get_url("preorder/api/v2.1/orders/add?" + meican_params(data))).content
+        return json.loads(self.query("post", order_url(tab, dish_id, address_uid)).content)
