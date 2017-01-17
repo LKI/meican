@@ -13,7 +13,7 @@
 # 安装
 
 ```
-git clone git@github.com:LKI/mcm.git ~/.mcm && cd ~/.mcm && pip install -r requirements.txt
+git clone git@github.com:fabanachino/mcm.git ~/.mcm && cd ~/.mcm && pip install -r requirements.txt
 ln -sf ~/.mcm/mcm/cmdline.py /usr/bin/mcm
 ```
 
