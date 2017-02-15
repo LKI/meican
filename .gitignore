@@ -1,4 +1,5 @@
-/env/
 *.pyc
-/.idea/
 .DS_Store
+/.idea/
+/env/
+mcm/settings.py

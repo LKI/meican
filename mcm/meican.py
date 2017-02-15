@@ -1,12 +1,12 @@
-# coding=utf-8 #
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 import json
+from functools import reduce
 
 import requests
 
-from urls import (
-    login_url, calender_items_url, restaurants_url, order_url, restaurant_dishes_url)
+from urls import login_url, calender_items_url, restaurants_url, order_url, restaurant_dishes_url
 
 favorite = "af5431"  # 鑫吉餐厅
 
