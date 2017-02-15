@@ -12,7 +12,7 @@ from utils import json_dump
 
 def execute(argv=None):
     if argv is None:
-        argv = sys.argv[1:] or ["-h"]
+        argv = sys.argv[1:] or []
     parser = argparse.ArgumentParser(description="order meican meal from command line")
     parser.add_argument("-u", "--username", help="meican username (phone or email)")
     parser.add_argument("-p", "--password", help="meican password")
