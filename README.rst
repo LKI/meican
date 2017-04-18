@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 ================
 MeiCan Meal 美餐点菜
 ================
@@ -28,14 +26,14 @@ Installation 安装
     git clone git@github.com:hui-z/mcm.git ~/.mcm && cd ~/.mcm && pip install -r requirements.txt
     ln -sf ~/.mcm/mcm/cmdline.py /usr/bin/mcm
 
-=======
-目前支持的命令
-=======
+====
+快速上手
+====
 
 ::
 
-    mcm -u <me@liriansu.com> -p <hunter2>  # 查询下次可以点的菜
-    mcm -u <me@liriansu.com> -p <hunter2> -o 香酥  # 点香酥鸡腿
+    mcm  # 查询下次点啥菜
+    mcm -o 香酥  # 点包含 香酥 关键字的菜，比如香酥鸡腿
 
 =======
 License

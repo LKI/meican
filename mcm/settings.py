@@ -1,16 +1,31 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from collections import defaultdict
+import json
 from os.path import exists, expanduser, join
 
-setting_file = join(expanduser('~'), '.mcmrc')
-settings = defaultdict(lambda: None)
+from utils import json_dump, prompt
 
-if exists(setting_file):
-    with open(setting_file) as f:
-        lines = f.readlines()
-        for line in lines:
-            if '=' in lines:
-                key, value = line.split('=', 1)
-                settings[key] = value
+setting_file = join(expanduser('~'), '.mcmrc')
+
+
+class MeiCanSetting(object):
+    def __init__(self):
+        self._settings = {}
+        if not exists(setting_file):
+            return
+        with open(setting_file) as f:
+            self._settings = json.load(f)
+
+    def save(self):
+        with open(setting_file, b'w') as f:
+            f.write(json_dump(self._settings))
+
+    def load_credentials(self):
+        for key in ['username', 'password']:
+            if key not in self._settings:
+                self._settings[key] = prompt('please input your meican {}: '.format(key))
+        self.save()
+
+    def __getattr__(self, item):
+        return self._settings[item]

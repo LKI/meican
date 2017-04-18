@@ -11,7 +11,7 @@ from urls import calender_items_url, login_url, order_url, restaurant_dishes_url
 address_uid = 'e7b93aafd597'  # 再惠
 
 
-class Session:
+class MeiCan(object):
     def __init__(self, username, password):
         self._session = requests.Session()
         self.responses = []
