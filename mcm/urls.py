@@ -40,7 +40,10 @@ def calender_items_url():
 
 def restaurants_url(tab):
     uid = tab['userTab']['uniqueId']
-    target_time = milli_to_datetime(tab['targetTime']).replace(hour=int(tab['openingTime']['closeTime'][:2]))
+    target_time = datetime.datetime.combine(
+        milli_to_datetime(tab['targetTime']),
+        datetime.time(hour=int(tab['openingTime']['closeTime'][:2]))
+    )
     data = {
         'tabUniqueId': uid,
         'targetTime': target_time,

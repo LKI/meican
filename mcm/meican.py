@@ -9,8 +9,6 @@ import requests
 from mcm.utils import decrypt
 from urls import calender_items_url, login_url, order_url, restaurant_dishes_url, restaurants_url
 
-favorite = 'af5431'  # 鑫吉餐厅
-
 address_uid = 'e7b93aafd597'  # 再惠
 
 
@@ -39,11 +37,16 @@ class Session:
         return self._calendar
 
     def get_restaurants(self, tab):
-        return json.loads(self._session.get(restaurants_url(tab)).content)
+        return json.loads(self.query('get', restaurants_url(tab)).content)['restaurantList']
 
     def list_dish(self, index=0):
+        dishes = []
         tab = self.available_tabs()[index]
-        return json.loads(self.query('get', restaurant_dishes_url(tab, favorite)).content)['dishList']
+        restaurants = self.get_restaurants(tab)
+        for restaurant in restaurants:
+            restaurant_uid = restaurant['uniqueId']
+            dishes.extend(json.loads(self.query('get', restaurant_dishes_url(tab, restaurant_uid)).content)['dishList'])
+        return dishes
 
     def available_tabs(self):
         return reduce(lambda x, y: x + y, [filter(lambda x: x['status'] == 'AVAILABLE', _['calendarItemList'])
