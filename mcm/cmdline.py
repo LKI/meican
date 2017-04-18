@@ -25,8 +25,11 @@ def execute(argv=None):
         order = args.order.decode('utf8')
         dish_list = filter(lambda x: order in x['name'], dish_list)
         if len(dish_list) == 1:
-            s.order(int(dish_list[0].get('id')))
-            print('done!')
+            try:
+                s.order(int(dish_list[0].get('id')))
+                print('done!')
+            except IndexError:
+                print('there is no available order to make!')
         else:
             print('error! you should specify an only one matching pattern')
     print(json_dump([_.get('name') for _ in dish_list]))
