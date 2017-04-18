@@ -1,4 +1,8 @@
 *.pyc
 .DS_Store
+
+MANIFEST
+
 /.idea/
 /env/
+/dist/

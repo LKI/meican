@@ -11,7 +11,6 @@ setup(
     author_email='liriansu@gmail.com',
     url='https://github.com/hui-z/mcm',
     license='WTFPL',
-    long_description=open('README.rst').read(),
     entry_points={
         'console_scripts': ['mcm = mcm.cmdline:execute']
     },
