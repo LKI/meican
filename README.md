@@ -26,6 +26,15 @@ mcm -u <me@liriansu.com> -p <hunter2> -o 香酥  # 点香酥鸡腿
 ```
 
 
+# License
+
+[WTFPL](www.wtfpl.net)
+
+简单来说就是你想干啥都行...
+
+有个小伙伴基于本repo开发了更高端的功能，
+各位也可以去参考下：[wujiyu115/meican](https://github.com/wujiyu115/meican)
+
 # TODOs
 
 * 取消订单
