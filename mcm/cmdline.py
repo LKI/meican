@@ -5,22 +5,19 @@ from __future__ import unicode_literals
 import argparse
 import sys
 
-import settings
-
 from meican import Session
-from utils import json_dump
+from settings import settings
+from utils import json_dump, prompt
 
 
 def execute(argv=None):
     if argv is None:
         argv = sys.argv[1:] or []
     parser = argparse.ArgumentParser(description='order meican meal from command line')
-    parser.add_argument('-u', '--username', help='meican username (phone or email)')
-    parser.add_argument('-p', '--password', help='meican password')
     parser.add_argument('-o', '--order', help='order meal')
     args = parser.parse_args(argv)
-    username = args.username or settings.username
-    password = args.password or settings.password
+    username = settings['username'] or prompt('please input your username: ')
+    password = settings['password'] or prompt('please input your password: ')
 
     s = Session(username, password)
     dish_list = s.list_dish()

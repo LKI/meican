@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import base64
 import datetime
 import json
 
@@ -14,9 +13,9 @@ def json_dump(data):
     return json.dumps(data, ensure_ascii=False, indent=2)
 
 
-def encrypt(string):
-    return base64.encodestring(string).strip()
-
-
-def decrypt(string):
-    return base64.decodestring(string)
+# noinspection PyCompatibility
+def prompt(hint):
+    try:
+        return raw_input(hint)
+    except NameError:
+        return input(hint)

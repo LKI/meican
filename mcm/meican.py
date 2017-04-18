@@ -6,7 +6,6 @@ from functools import reduce
 
 import requests
 
-from mcm.utils import decrypt
 from urls import calender_items_url, login_url, order_url, restaurant_dishes_url, restaurants_url
 
 address_uid = 'e7b93aafd597'  # 再惠
@@ -16,7 +15,7 @@ class Session:
     def __init__(self, username, password):
         self._session = requests.Session()
         self.responses = []
-        self.login(username, decrypt(password))
+        self.login(username, password)
         self._calendar = json.loads(self._session.get(calender_items_url()).content)
 
     def login(self, username, password):
