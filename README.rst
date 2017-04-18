@@ -17,8 +17,12 @@ MeiCan Meal 美餐点菜
 Installation 安装
 ===============
 
-首先你得有Git和Python（最好是2.7，3还没测过），通过命令行安装：
+通过pip安装：
+::
 
+    pip install meican
+
+或者是命令行安装：
 ::
 
     git clone git@github.com:hui-z/mcm.git ~/.mcm && cd ~/.mcm && pip install -r requirements.txt
@@ -28,11 +32,10 @@ Installation 安装
 目前支持的命令
 =======
 
-```
-mcm -u <me@liriansu.com> -p <hunter2>  # 查询下次可以点的菜
-mcm -u <me@liriansu.com> -p <hunter2> -o 香酥  # 点香酥鸡腿
-```
+::
 
+    mcm -u <me@liriansu.com> -p <hunter2>  # 查询下次可以点的菜
+    mcm -u <me@liriansu.com> -p <hunter2> -o 香酥  # 点香酥鸡腿
 
 =======
 License
