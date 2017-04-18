@@ -6,6 +6,7 @@ import argparse
 import sys
 
 import settings
+
 from meican import Session
 from utils import json_dump
 
@@ -13,10 +14,10 @@ from utils import json_dump
 def execute(argv=None):
     if argv is None:
         argv = sys.argv[1:] or []
-    parser = argparse.ArgumentParser(description="order meican meal from command line")
-    parser.add_argument("-u", "--username", help="meican username (phone or email)")
-    parser.add_argument("-p", "--password", help="meican password")
-    parser.add_argument("-o", "--order", help="order meal")
+    parser = argparse.ArgumentParser(description='order meican meal from command line')
+    parser.add_argument('-u', '--username', help='meican username (phone or email)')
+    parser.add_argument('-p', '--password', help='meican password')
+    parser.add_argument('-o', '--order', help='order meal')
     args = parser.parse_args(argv)
     username = args.username or settings.username
     password = args.password or settings.password
@@ -28,9 +29,9 @@ def execute(argv=None):
         dish_list = filter(lambda x: order in x['name'], dish_list)
         if len(dish_list) == 1:
             s.order(int(dish_list[0].get('id')))
-            print("done!")
+            print('done!')
         else:
-            print("error! you should specify an only one matching pattern")
+            print('error! you should specify an only one matching pattern')
     print(json_dump([_.get('name') for _ in dish_list]))
 
 
