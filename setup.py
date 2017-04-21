@@ -9,10 +9,10 @@ setup(
     description='UNOFFICIAL meican command line / sdk',
     author='Lirian Su',
     author_email='liriansu@gmail.com',
-    url='https://github.com/hui-z/mcm',
+    url='https://github.com/hui-z/meican',
     license='WTFPL',
     entry_points={
-        'console_scripts': ['mcm = mcm.cmdline:execute']
+        'console_scripts': ['meican = meican.cmdline:execute']
     },
-    packages=['mcm'],
+    packages=['meican'],
 )

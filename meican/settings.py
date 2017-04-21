@@ -6,7 +6,7 @@ from os.path import exists, expanduser, join
 
 from utils import json_dump, prompt
 
-setting_file = join(expanduser('~'), '.mcmrc')
+setting_file = join(expanduser('~'), '.meicanrc')
 
 
 class MeiCanSetting(object):
