@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import argparse
 import sys
 
-from meican import MeiCan
+from tools import MeiCan
 from settings import MeiCanSetting
 from utils import json_dump
 
