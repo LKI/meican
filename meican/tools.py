@@ -73,11 +73,7 @@ class MeiCan(object):
     def load_tabs(self, refresh=False):
         if not self._calendar_items or refresh:
             self._calendar_items = self.http_get(RestUrl.calender_items())
-        self._tabs = get_tabs_from_calendar_items(self._calendar_items)
-
-    def save_response(self, response):
-        self.responses.append(response)
-        return response
+            self._tabs = get_tabs_from_calendar_items(self._calendar_items)
 
     def calendar_items(self):
         return self._calendar_items
