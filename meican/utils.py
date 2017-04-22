@@ -13,6 +13,16 @@ def json_dump(data):
     return json.dumps(data, ensure_ascii=False, indent=2)
 
 
+def join_dict(data, combinator='=', separator='&'):
+    """
+    :type data: dict
+    :type combinator: str | unicode
+    :type separator: str | unicode
+    :rtype: str | unicode
+    """
+    return separator.join(['{}{}{}'.format(k, combinator, v) for k, v in data.items()])
+
+
 # noinspection PyCompatibility
 def prompt(hint):
     try:
