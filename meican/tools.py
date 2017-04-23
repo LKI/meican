@@ -50,25 +50,20 @@ class RestUrl(object):
 
 
 class MeiCan(object):
-    def __init__(self):
-        self._session = requests.Session()
-        self.responses = []
-        self._calendar_items = None
-        self._tabs = None
-
-    @classmethod
-    def login(cls, username, password):
+    def __init__(self, username, password):
         """
         :type username: str | unicode
         :type password: str | unicode
         """
-        meican = cls()
+        self._session = requests.Session()
+        self.responses = []
+        self._calendar_items = None
+        self._tabs = None
         form_data = {'username': username, 'password': password, 'loginType': 'username', 'remember': True}
-        response = meican._request('post', login_url(), form_data)
+        response = self._request('post', login_url(), form_data)
         if 200 != response.status_code:  # or '用户名或密码错误' in response.content:
             raise MeiCanError('login fail because username or password incorrect')
-        meican.load_tabs()
-        return meican
+        self.load_tabs()
 
     def load_tabs(self, refresh=False):
         if not self._calendar_items or refresh:

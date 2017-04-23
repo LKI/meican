@@ -19,7 +19,7 @@ def execute(argv=None):
 
     settings = MeiCanSetting()
     settings.load_credentials()
-    meican = MeiCan.login(settings.username, settings.password)
+    meican = MeiCan(settings.username, settings.password)
 
     try:
         dish_list = meican.list_dish()
