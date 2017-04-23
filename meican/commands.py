@@ -1,16 +1,37 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from models import Tab
+from models import Restaurant, Tab, Dish
 
 
-def get_tabs_from_calendar_items(data):
+def get_tabs(data):
     """
     :type data: dict
     :rtype: list[meican.models.Tab]
     """
-    date_list = data['dateList']
     tabs = []
-    for day in date_list:
+    for day in data['dateList']:
         tabs.extend([Tab(_) for _ in day['calendarItemList']])
     return tabs
+
+
+def get_restaurants(data):
+    """
+    :type data: dict
+    :rtype: list[meican.models.Restaurant]
+    """
+    restaurants = []
+    for restaurant_data in data['restaurantList']:
+        restaurants.append(Restaurant(restaurant_data))
+    return restaurants
+
+
+def get_dishes(data):
+    """
+    :type data: dict
+    :rtype: list[meican.models.Dish]
+    """
+    dishes = []
+    for dish_data in data['dishList']:
+        dishes.append(Dish(dish_data))
+    return dishes

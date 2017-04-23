@@ -18,3 +18,8 @@ class MeiCanKeyError(MeiCanError):
     反正就是 dict key 不对
     """
     pass
+
+
+class NoOrderAvailable(MeiCanError):
+    """ 目前还点不了餐 """
+    pass

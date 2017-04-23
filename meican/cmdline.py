@@ -5,9 +5,9 @@ from __future__ import unicode_literals
 import argparse
 import sys
 
-from tools import MeiCan
+from meican.exceptions import NoOrderAvailable
 from settings import MeiCanSetting
-from utils import json_dump
+from tools import MeiCan
 
 
 def execute(argv=None):
@@ -22,19 +22,21 @@ def execute(argv=None):
     meican = MeiCan(settings.username, settings.password)
 
     try:
-        dish_list = meican.list_dish()
-    except IndexError:
-        print('there is no available order to make!')
+        dishes = meican.list_dishes()
+    except NoOrderAvailable:
+        print('别急，下一顿还没开放订餐')
         return
     if args.order:
-        order = args.order.decode('utf8')
-        dish_list = filter(lambda x: order in x['name'], dish_list)
-        if len(dish_list) == 1:
-            meican.order(int(dish_list[0].get('id')))
+        keyword = args.order.decode('utf-8')
+        dishes = [_ for _ in dishes if keyword in _.name]
+        if len(dishes) == 1:
+            meican.order(dishes[0])
             print('done!')
+        elif not dishes:
+            print('没有找到 {} 的对应菜品'.format(keyword))
         else:
-            print('error! you should specify an only one matching pattern')
-    print(json_dump([_.get('name') for _ in dish_list]))
+            print('找到多于一个菜品，请指定更详细的关键词')
+            print('\n'.join(['{}'.format(_) for _ in dishes]))
 
 
 if __name__ == '__main__':

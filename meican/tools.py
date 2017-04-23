@@ -4,14 +4,14 @@ from __future__ import unicode_literals
 import datetime
 import json
 import time
-from functools import reduce
 
 import requests
 
-from meican.commands import get_tabs_from_calendar_items
-from meican.exceptions import MeiCanError
+from meican.commands import get_dishes, get_restaurants, get_tabs
+from meican.exceptions import MeiCanError, NoOrderAvailable
+from meican.models import TabStatus
 from meican.utils import join_dict
-from urls import login_url, order_url, restaurant_dishes_url, restaurants_url
+from urls import login_url
 
 address_uid = 'e7b93aafd597'  # 再惠
 
@@ -48,6 +48,30 @@ class RestUrl(object):
         }
         return cls.get_base_url('preorder/api/v2.1/calendarItems/list', data)
 
+    @classmethod
+    def restaurants(cls, tab):
+        """
+        :type tab: meican.models.Tab
+        """
+        data = {
+            'tabUniqueId': tab.uid,
+            'targetTime': tab.target_time,
+        }
+        return cls.get_base_url('preorder/api/v2.1/restaurants/list', data)
+
+    @classmethod
+    def dishes(cls, tab, restaurant):
+        """
+        :type tab: meican.models.Tab
+        :type restaurant: meican.models.Restaurant
+        """
+        data = {
+            'restaurantUniqueId': restaurant.uid,
+            'tabUniqueId': tab.uid,
+            'targetTime': tab.target_time,
+        }
+        return cls.get_base_url('preorder/api/v2.1/restaurants/show', data)
+
 
 class MeiCan(object):
     def __init__(self, username, password):
@@ -55,44 +79,72 @@ class MeiCan(object):
         :type username: str | unicode
         :type password: str | unicode
         """
-        self._session = requests.Session()
         self.responses = []
+        self._session = requests.Session()
         self._calendar_items = None
         self._tabs = None
+
         form_data = {'username': username, 'password': password, 'loginType': 'username', 'remember': True}
         response = self._request('post', login_url(), form_data)
         if 200 != response.status_code:  # or '用户名或密码错误' in response.content:
             raise MeiCanError('login fail because username or password incorrect')
-        self.load_tabs()
+
+    @property
+    def tabs(self):
+        """
+        :rtype: list[meican.models.Tab]
+        """
+        if not self._tabs:
+            self.load_tabs()
+        return self._tabs
+
+    @property
+    def next_available_tab(self):
+        """
+        :rtype: meican.models.Tab
+        """
+        available_tabs = [_ for _ in self.tabs if _.status == TabStatus.AVAIL]
+        return available_tabs[0] if available_tabs else None
 
     def load_tabs(self, refresh=False):
         if not self._calendar_items or refresh:
             self._calendar_items = self.http_get(RestUrl.calender_items())
-            self._tabs = get_tabs_from_calendar_items(self._calendar_items)
-
-    def calendar_items(self):
-        return self._calendar_items
+            self._tabs = get_tabs(self._calendar_items)
 
     def get_restaurants(self, tab):
-        return json.loads(self._request('get', restaurants_url(tab)).content)['restaurantList']
+        """
+        :type tab: meican.models.Tab
+        :rtype: list[meican.models.Restaurant]
+        """
+        data = self.http_get(RestUrl.restaurants(tab))
+        return get_restaurants(data)
 
-    def list_dish(self, index=0):
-        dishes = []
-        tab = self.available_tabs()[index]
+    def get_dishes(self, tab, restaurant):
+        """
+        :type tab: meican.models.Tab
+        :type restaurant: meican.models.Restaurant
+        """
+        data = self.http_get(RestUrl.dishes(tab, restaurant))
+        return get_dishes(data)
+
+    def list_dishes(self, tab=None):
+        """
+        :type tab: meican.models.Tab
+        :rtype: list[meican.models.Dish]
+        """
+        tab = tab or self.next_available_tab
+        if not tab:
+            raise NoOrderAvailable()
         restaurants = self.get_restaurants(tab)
+        dishes = []
         for restaurant in restaurants:
-            restaurant_uid = restaurant['uniqueId']
-            dishes.extend(
-                json.loads(self._request('get', restaurant_dishes_url(tab, restaurant_uid)).content)['dishList'])
+            dishes.extend(self.get_dishes(tab, restaurant))
         return dishes
 
-    def available_tabs(self):
-        return reduce(lambda x, y: x + y, [filter(lambda x: x['status'] == 'AVAILABLE', _['calendarItemList'])
-            for _ in self.calendar_items()['dateList']])
-
     def order(self, dish_id, index=0):
-        tab = self.available_tabs()[index]
-        return json.loads(self._request('post', order_url(tab, dish_id, address_uid)).content)
+        # tab = self.available_tabs()[index]
+        # json.loads(self._request('post', order_url(tab, dish_id, address_uid)).content)
+        raise NotImplementedError
 
     def http_get(self, url, **kwargs):
         """
@@ -120,6 +172,7 @@ class MeiCan(object):
         :rtype: requests.Response
         """
         func = getattr(self._session, method)
-        response = func(url, data=data, **kwargs)
+        response = func(url, data=data, **kwargs)  # type: requests.Response
+        response.encoding = response.encoding or 'utf-8'
         self.responses.append(response)
         return response

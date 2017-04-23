@@ -21,15 +21,12 @@ class TabStatus(Enum):
         value_enums = {
             'AVAILABLE': cls.AVAIL,
             'CLOSED': cls.CLOSED,
+            'NOT_YET': cls.NOT_YET,
         }
         return value_enums.get(string_value, cls.UNKNOWN)
 
 
 class ReadableObject(object):
-    """
-    just define __unicode__ to make a object readable
-    """
-
     def __unicode__(self):
         return '<{}>'.format(self.__class__)
 
@@ -38,9 +35,7 @@ class ReadableObject(object):
 
 
 class Address(ReadableObject):
-    """
-    地址
-    """
+    """ 地址 """
 
     def __init__(self, data):
         """
@@ -73,3 +68,37 @@ class Tab(ReadableObject):
 
     def __unicode__(self):
         return '{} {} {}'.format(self.status.value, self.target_time.strftime('%Y-%m-%d'), self.title)
+
+
+class Restaurant(ReadableObject):
+    """ 餐厅 """
+
+    def __init__(self, data):
+        """
+        :type data: dict
+        """
+        self.uid = data['uniqueId']
+        self.name = data['name']
+        self.is_open = data['open']
+        self.rating = data['rating']
+        self.tel = data['tel']
+        self.latitude = data['latitude']
+        self.longitude = data['longitude']
+
+    def __unicode__(self):
+        return '{}'.format(self.name)
+
+
+class Dish(ReadableObject):
+    """ 菜 """
+
+    def __init__(self, data):
+        """
+        :type data: dict
+        """
+        self.id = int(data['id'])
+        self.name = data['name']
+        self.price = data['priceString']
+
+    def __unicode__(self):
+        return '{}'.format(self.name)
