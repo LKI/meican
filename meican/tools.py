@@ -11,9 +11,6 @@ from meican.commands import get_dishes, get_restaurants, get_tabs
 from meican.exceptions import MeiCanError, NoOrderAvailable
 from meican.models import TabStatus
 from meican.utils import join_dict
-from urls import login_url
-
-address_uid = 'e7b93aafd597'  # 再惠
 
 
 class RestUrl(object):
@@ -72,6 +69,25 @@ class RestUrl(object):
         }
         return cls.get_base_url('preorder/api/v2.1/restaurants/show', data)
 
+    @classmethod
+    def order(cls, dish):
+        """
+        :type dish: meican.models.Dish
+        """
+        tab = dish.restaurant.tab
+        address = tab.addresses[0]  # todo select address or error
+        data = {
+            'order': {
+                'count': 1,
+                'dishId': dish.id,
+            },
+            'tabUniqueId': tab.uid,
+            'targetTime': tab.target_time,
+            'corpAddressUniqueId': address.uid,
+            'userAddressUniqueId': address.uid,
+        }
+        return cls.get_base_url('preorder/api/v2.1/orders/add', data)
+
 
 class MeiCan(object):
     def __init__(self, username, password):
@@ -85,7 +101,7 @@ class MeiCan(object):
         self._tabs = None
 
         form_data = {'username': username, 'password': password, 'loginType': 'username', 'remember': True}
-        response = self._request('post', login_url(), form_data)
+        response = self._request('post', RestUrl.login(), form_data)
         if 200 != response.status_code:  # or '用户名或密码错误' in response.content:
             raise MeiCanError('login fail because username or password incorrect')
 
@@ -140,10 +156,12 @@ class MeiCan(object):
             dishes.extend(self.get_dishes(restaurant))
         return dishes
 
-    def order(self, dish_id, index=0):
-        # tab = self.available_tabs()[index]
-        # json.loads(self._request('post', order_url(tab, dish_id, address_uid)).content)
-        raise NotImplementedError
+    def order(self, dish):
+        """
+        :type dish: meican.models.Dish
+        """
+        data = self.http_post(RestUrl.order(dish))
+        return data
 
     def http_get(self, url, **kwargs):
         """
@@ -153,7 +171,7 @@ class MeiCan(object):
         response = self._request('get', url, **kwargs)
         return json.loads(response.content)
 
-    def http_post(self, url, data, **kwargs):
+    def http_post(self, url, data=None, **kwargs):
         """
         :type url: str | unicode
         :type data: dict

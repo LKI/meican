@@ -64,7 +64,7 @@ class Tab(ReadableObject):
         self.target_time = datetime.fromtimestamp(int(data['targetTime']) / 1000)
         self.status = TabStatus.parse(data['status'])
         self.uid = data['userTab']['uniqueId']
-        self.addresses = [_ for _ in data['userTab']['corp']['addressList']]
+        self.addresses = [Address(_) for _ in data['userTab']['corp']['addressList']]
 
     def __unicode__(self):
         return '{} {} {}'.format(self.status.value, self.target_time.strftime('%Y-%m-%d'), self.title)
