@@ -73,10 +73,12 @@ class Tab(ReadableObject):
 class Restaurant(ReadableObject):
     """ 餐厅 """
 
-    def __init__(self, data):
+    def __init__(self, tab, data):
         """
+        :type tab: Tab
         :type data: dict
         """
+        self.tab = tab
         self.uid = data['uniqueId']
         self.name = data['name']
         self.is_open = data['open']
@@ -92,10 +94,12 @@ class Restaurant(ReadableObject):
 class Dish(ReadableObject):
     """ 菜 """
 
-    def __init__(self, data):
+    def __init__(self, restaurant, data):
         """
         :type data: dict
+        :type restaurant: Restaurant
         """
+        self.restaurant = restaurant
         self.id = int(data['id'])
         self.name = data['name']
         self.price = data['priceString']

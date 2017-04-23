@@ -60,11 +60,11 @@ class RestUrl(object):
         return cls.get_base_url('preorder/api/v2.1/restaurants/list', data)
 
     @classmethod
-    def dishes(cls, tab, restaurant):
+    def dishes(cls, restaurant):
         """
-        :type tab: meican.models.Tab
         :type restaurant: meican.models.Restaurant
         """
+        tab = restaurant.tab
         data = {
             'restaurantUniqueId': restaurant.uid,
             'tabUniqueId': tab.uid,
@@ -117,15 +117,14 @@ class MeiCan(object):
         :rtype: list[meican.models.Restaurant]
         """
         data = self.http_get(RestUrl.restaurants(tab))
-        return get_restaurants(data)
+        return get_restaurants(tab, data)
 
-    def get_dishes(self, tab, restaurant):
+    def get_dishes(self, restaurant):
         """
-        :type tab: meican.models.Tab
         :type restaurant: meican.models.Restaurant
         """
-        data = self.http_get(RestUrl.dishes(tab, restaurant))
-        return get_dishes(data)
+        data = self.http_get(RestUrl.dishes(restaurant))
+        return get_dishes(restaurant, data)
 
     def list_dishes(self, tab=None):
         """
@@ -138,7 +137,7 @@ class MeiCan(object):
         restaurants = self.get_restaurants(tab)
         dishes = []
         for restaurant in restaurants:
-            dishes.extend(self.get_dishes(tab, restaurant))
+            dishes.extend(self.get_dishes(restaurant))
         return dishes
 
     def order(self, dish_id, index=0):
