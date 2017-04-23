@@ -5,14 +5,14 @@ from setuptools import setup
 
 setup(
     name='meican',
-    version='0.0.1',
+    version='0.0.2',
     description='UNOFFICIAL meican command line / sdk',
     author='Lirian Su',
     author_email='liriansu@gmail.com',
     url='https://github.com/hui-z/meican',
     license='WTFPL',
     entry_points={
-        'console_scripts': ['meican = meican.cmdline:execute']
+        'console_scripts': ['meican = cmdline:execute']
     },
     packages=['meican'],
 )

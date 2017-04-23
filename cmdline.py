@@ -6,14 +6,14 @@ import argparse
 import sys
 
 from meican.exceptions import NoOrderAvailable
-from settings import MeiCanSetting
-from tools import MeiCan
+from meican.settings import MeiCanSetting
+from meican.tools import MeiCan
 
 
 def execute(argv=None):
     if argv is None:
         argv = sys.argv[1:] or []
-    parser = argparse.ArgumentParser(description='order meican meal from command line')
+    parser = argparse.ArgumentParser(description='命令行点美餐的工具')
     parser.add_argument('-o', '--order', help='order meal')
     args = parser.parse_args(argv)
 
