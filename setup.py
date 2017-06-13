@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name='meican',
-    version='0.1.1',
+    version='0.1.2',
     description='UNOFFICIAL meican command line / sdk',
     author='Lirian Su',
     author_email='liriansu@gmail.com',
