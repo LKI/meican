@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from __future__ import absolute_import, unicode_literals
 
 from setuptools import setup
 
@@ -12,7 +12,7 @@ setup(
     url='https://github.com/hui-z/meican',
     license='WTFPL',
     entry_points={
-        'console_scripts': ['meican = cmdline:execute']
+        'console_scripts': ['meican = meican.cmdline:execute']
     },
     packages=['meican'],
 )

@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import json
 from os.path import exists, expanduser, join
 
-from utils import json_dump, prompt
+from meican.utils import json_dump, prompt
 
 setting_file = join(expanduser('~'), '.meicanrc')
 
