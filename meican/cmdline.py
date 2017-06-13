@@ -3,7 +3,10 @@
 from __future__ import absolute_import, unicode_literals
 
 import argparse
+import os
 import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from meican.exceptions import NoOrderAvailable
 from meican.settings import MeiCanSetting

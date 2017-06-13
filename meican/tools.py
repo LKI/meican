@@ -169,7 +169,7 @@ class MeiCan(object):
         :rtype: dict | str | unicode
         """
         response = self._request('get', url, **kwargs)
-        return json.loads(response.content)
+        return response.json()
 
     def http_post(self, url, data=None, **kwargs):
         """
@@ -178,7 +178,7 @@ class MeiCan(object):
         :rtype: dict | str | unicode
         """
         response = self._request('post', url, data, **kwargs)
-        return json.loads(response.content)
+        return response.json()
 
     def _request(self, method, url, data=None, **kwargs):
         """
