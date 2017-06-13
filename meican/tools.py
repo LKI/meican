@@ -149,7 +149,7 @@ class MeiCan(object):
         """
         tab = tab or self.next_available_tab
         if not tab:
-            raise NoOrderAvailable()
+            raise NoOrderAvailable('Currently no available orders')
         restaurants = self.get_restaurants(tab)
         dishes = []
         for restaurant in restaurants:
