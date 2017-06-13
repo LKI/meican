@@ -20,7 +20,7 @@ def join_dict(data, combinator='=', separator='&'):
     :type separator: str | unicode
     :rtype: str | unicode
     """
-    return separator.join(['{}{}{}'.format(k, combinator, v) for k, v in data.items()])
+    return separator.join(['{}{}{}'.format(k, combinator, v) for k, v in sorted(data.items())])
 
 
 # noinspection PyCompatibility

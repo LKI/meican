@@ -77,10 +77,10 @@ class RestUrl(object):
         tab = dish.restaurant.tab
         address = tab.addresses[0]  # todo select address or error
         data = {
-            'order': {
+            'order': [{
                 'count': 1,
                 'dishId': dish.id,
-            },
+            }],
             'tabUniqueId': tab.uid,
             'targetTime': tab.target_time,
             'corpAddressUniqueId': address.uid,

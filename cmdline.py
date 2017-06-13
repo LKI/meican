@@ -10,6 +10,12 @@ from meican.settings import MeiCanSetting
 from meican.tools import MeiCan
 
 
+def initialize_meican():
+    settings = MeiCanSetting()
+    settings.load_credentials()
+    return MeiCan(settings.username, settings.password)
+
+
 def execute(argv=None):
     if argv is None:
         argv = sys.argv[1:] or []
@@ -17,9 +23,7 @@ def execute(argv=None):
     parser.add_argument('-o', '--order', help='order meal')
     args = parser.parse_args(argv)
 
-    settings = MeiCanSetting()
-    settings.load_credentials()
-    meican = MeiCan(settings.username, settings.password)
+    meican = initialize_meican()
 
     try:
         dishes = meican.list_dishes()
