@@ -18,7 +18,7 @@ class MeiCanSetting(object):
             self._settings = json.load(f)
 
     def save(self):
-        with open(setting_file, b'w') as f:
+        with open(setting_file, str('w')) as f:
             f.write(json_dump(self._settings))
 
     def load_credentials(self):
