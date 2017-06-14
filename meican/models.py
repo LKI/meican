@@ -31,7 +31,7 @@ class ReadableObject(object):
         return '<{}>'.format(self.__class__)
 
     def __repr__(self):
-        return self.__unicode__().encode('utf-8')
+        return '{}'.format(self.__unicode__())
 
 
 class Address(ReadableObject):
