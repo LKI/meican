@@ -35,5 +35,7 @@ def get_dishes(restaurant, data):
     """
     dishes = []
     for dish_data in data['dishList']:
+        if dish_data.get('isSection', False) or dish_data.get('priceString') is None:
+            continue
         dishes.append(Dish(restaurant, dish_data))
     return dishes

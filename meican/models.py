@@ -11,6 +11,7 @@ class TabStatus(Enum):
     CLOSED = 'CLOSED'
     NOT_YET = 'NOT_YET'
     UNKNOWN = 'UNKNOWN'
+    ORDERED = 'ORDERED'
 
     @classmethod
     def parse(cls, string_value):
@@ -22,6 +23,7 @@ class TabStatus(Enum):
             'AVAILABLE': cls.AVAIL,
             'CLOSED': cls.CLOSED,
             'NOT_YET': cls.NOT_YET,
+            'ORDER': cls.ORDERED,
         }
         return value_enums.get(string_value, cls.UNKNOWN)
 
@@ -31,7 +33,10 @@ class ReadableObject(object):
         return '<{}>'.format(self.__class__)
 
     def __repr__(self):
-        return '{}'.format(self.__unicode__())
+        output = '{}'.format(self.__unicode__())
+        if isinstance(output, unicode):
+            output = output.encode('utf8')
+        return output
 
 
 class Address(ReadableObject):
