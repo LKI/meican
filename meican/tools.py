@@ -76,16 +76,16 @@ class RestUrl(object):
         tab = dish.restaurant.tab
         address = tab.addresses[0]  # todo select address or error
         data = {
-            'order': [{
-                'count': 1,
-                'dishId': dish.id,
-            }],
+            'order': json.dumps([{
+                'count': '1',
+                'dishId': '{}'.format(dish.id),
+            }]),
             'tabUniqueId': tab.uid,
             'targetTime': tab.target_time,
             'corpAddressUniqueId': address.uid,
             'userAddressUniqueId': address.uid,
         }
-        return cls.get_base_url('preorder/api/v2.1/orders/add', data)
+        return cls.get_base_url('preorder/api/v2.1/orders/add', data, wrap=False)
 
 
 class MeiCan(object):
