@@ -191,4 +191,7 @@ class MeiCan(object):
         response = func(url, data=data, **kwargs)  # type: requests.Response
         response.encoding = response.encoding or 'utf-8'
         self.responses.append(response)
+        if response.status_code != 200:
+            error = response.json()
+            raise MeiCanError('[{}] {}'.format(error.get('error', ''), error.get('error_description', '')))
         return response
