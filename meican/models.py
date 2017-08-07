@@ -2,8 +2,9 @@
 from __future__ import absolute_import, unicode_literals
 
 from datetime import datetime
-
 from enum import Enum
+
+import six
 
 
 class TabStatus(Enum):
@@ -29,14 +30,8 @@ class TabStatus(Enum):
 
 
 class ReadableObject(object):
-    def __unicode__(self):
-        return '<{}>'.format(self.__class__)
-
     def __repr__(self):
-        output = '{}'.format(self.__unicode__())
-        if isinstance(output, unicode):
-            output = output.encode('utf8')
-        return output
+        return six.text_type(self)
 
 
 class Address(ReadableObject):
@@ -50,7 +45,7 @@ class Address(ReadableObject):
         self.address = data['address']  # 公司地址
         self.pick_up = data['pickUpLocation']  # 取餐地址
 
-    def __unicode__(self):
+    def __repr__(self):
         return '{} {}'.format(self.uid, self.address)
 
 
@@ -71,7 +66,7 @@ class Tab(ReadableObject):
         self.uid = data['userTab']['uniqueId']
         self.addresses = [Address(_) for _ in data['userTab']['corp']['addressList']]
 
-    def __unicode__(self):
+    def __repr__(self):
         return '{} {} {}'.format(self.status.value, self.target_time.strftime('%Y-%m-%d'), self.title)
 
 
@@ -92,7 +87,7 @@ class Restaurant(ReadableObject):
         self.latitude = data['latitude']
         self.longitude = data['longitude']
 
-    def __unicode__(self):
+    def __repr__(self):
         return '{}'.format(self.name)
 
 
@@ -109,5 +104,5 @@ class Dish(ReadableObject):
         self.name = data['name']
         self.price = data['priceString']
 
-    def __unicode__(self):
+    def __repr__(self):
         return '{}'.format(self.name)
