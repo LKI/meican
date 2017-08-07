@@ -4,7 +4,9 @@ from __future__ import unicode_literals
 import json
 from os.path import exists, expanduser, join
 
-from meican.utils import json_dump, prompt
+import six
+
+from meican.utils import json_dump
 
 setting_file = join(expanduser('~'), '.meicanrc')
 
@@ -24,7 +26,7 @@ class MeiCanSetting(object):
     def load_credentials(self):
         for key in ['username', 'password']:
             if key not in self._settings:
-                self._settings[key] = prompt('please input your meican {}: '.format(key))
+                self._settings[key] = six.moves.input('please input your meican {}: '.format(key))
         self.save()
 
     def __getattr__(self, item):
