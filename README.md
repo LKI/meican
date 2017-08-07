@@ -1,5 +1,6 @@
 # MeiCan 美餐点菜
-[![Package](https://img.shields.io/pypi/v/meican.svg)](https://pypi.python.org/pypi/meican)
+[![PyPI](https://img.shields.io/pypi/v/meican.svg)](https://pypi.python.org/pypi/meican)
+[![Travis](https://img.shields.io/travis/hui-z/meican.svg)](https://travis-ci.org/hui-z/meican)
 
 **非官方的Python包 / 命令行点美餐工具（首先你要有一个账号）。**
 
