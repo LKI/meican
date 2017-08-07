@@ -6,11 +6,11 @@ import json
 import time
 
 import requests
+import six
 
 from meican.commands import get_dishes, get_restaurants, get_tabs
 from meican.exceptions import MeiCanError, NoOrderAvailable
 from meican.models import TabStatus
-from meican.utils import join_dict
 
 
 class RestUrl(object):
@@ -27,7 +27,7 @@ class RestUrl(object):
         if params:
             if wrap:
                 params['noHttpGetCache'] = int(time.time() * 1000)
-            path = '{}?{}'.format(path, join_dict(params))
+            path = '{}?{}'.format(path, six.moves.urllib.parse.urlencode(sorted(params.items())))
         return 'https://meican.com/{}'.format(path)
 
     @classmethod
