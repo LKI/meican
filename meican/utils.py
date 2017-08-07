@@ -21,11 +21,3 @@ def join_dict(data, combinator='=', separator='&'):
     :rtype: str | unicode
     """
     return separator.join(['{}{}{}'.format(k, combinator, v) for k, v in sorted(data.items())])
-
-
-# noinspection PyCompatibility
-def prompt(hint):
-    try:
-        return raw_input(hint)
-    except NameError:
-        return input(hint)
