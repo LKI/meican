@@ -1,8 +1,9 @@
-*.pyc
 .DS_Store
-*.egg-info/
-
+.coverage
 MANIFEST
+
+*.pyc
+*.egg-info/
 
 /.idea/
 /env/
