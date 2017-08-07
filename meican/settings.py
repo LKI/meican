@@ -6,8 +6,6 @@ from os.path import exists, expanduser, join
 
 import six
 
-from meican.utils import json_dump
-
 setting_file = join(expanduser('~'), '.meicanrc')
 
 
@@ -16,12 +14,12 @@ class MeiCanSetting(object):
         self._settings = {}
         if not exists(setting_file):
             return
-        with open(setting_file) as f:
+        with open(setting_file, encoding='utf-8') as f:
             self._settings = json.load(f)
 
     def save(self):
-        with open(setting_file, str('w')) as f:
-            f.write(json_dump(self._settings))
+        with open(setting_file, str('w'), encoding='utf-8') as f:
+            f.write(json.dumps(self._settings, ensure_ascii=False, indent=2))
 
     def load_credentials(self):
         for key in ['username', 'password']:
