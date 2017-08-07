@@ -96,8 +96,8 @@ class Dish(ReadableObject):
 
     def __init__(self, restaurant, data):
         """
-        :type data: dict
         :type restaurant: Restaurant
+        :type data: dict
         """
         self.restaurant = restaurant
         self.id = int(data['id'])
