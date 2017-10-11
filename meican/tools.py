@@ -90,13 +90,15 @@ class RestUrl(object):
 
 
 class MeiCan(object):
-    def __init__(self, username, password):
+    def __init__(self, username, password, user_agent=None):
         """
         :type username: str | unicode
         :type password: str | unicode
         """
         self.responses = []
         self._session = requests.Session()
+        user_agent = user_agent or 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
+        self._session.headers['User-Agent'] = user_agent
         self._calendar_items = None
         self._tabs = None
 
