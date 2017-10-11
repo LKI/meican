@@ -3,9 +3,11 @@ from __future__ import absolute_import, unicode_literals
 
 from setuptools import setup
 
+import meican
+
 setup(
     name='meican',
-    version='0.2.1',
+    version=meican.__version__,
     description='UNOFFICIAL meican command line / sdk',
     author='Lirian Su',
     author_email='liriansu@gmail.com',
