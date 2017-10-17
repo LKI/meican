@@ -9,7 +9,7 @@ import requests
 import six
 
 from meican.commands import get_dishes, get_restaurants, get_tabs
-from meican.exceptions import MeiCanError, NoOrderAvailable
+from meican.exceptions import MeiCanError, MeiCanLoginFail, NoOrderAvailable
 from meican.models import TabStatus
 
 
@@ -105,7 +105,7 @@ class MeiCan(object):
         form_data = {'username': username, 'password': password, 'loginType': 'username', 'remember': True}
         response = self._request('post', RestUrl.login(), form_data)
         if 200 != response.status_code:  # or '用户名或密码错误' in response.content:
-            raise MeiCanError('login fail because username or password incorrect')
+            raise MeiCanLoginFail('login fail because username or password incorrect')
 
     @property
     def tabs(self):

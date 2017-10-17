@@ -25,7 +25,7 @@ pip install meican
 样例Python代码（想实现更多操作请读源码）：
 
 ```python
-from meican import MeiCan,MeiCanError,NoOrderAvailable
+from meican import MeiCan, MeiCanLoginFail, NoOrderAvailable
 
 try:
     meican = MeiCan('username@domain', 'hunter2')  # login
@@ -36,7 +36,7 @@ try:
         print('今天没有香酥鸡腿 :sad:')
 except NoOrderAvailable:
     print('今天没有开放点餐')
-except MeiCanError:
+except MeiCanLoginFail:
     print('用户名或者密码不正确')
 ```
 
