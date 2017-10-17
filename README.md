@@ -55,3 +55,14 @@ alias meican="python ~/.meican/meican/cmdline.py"
 meican  # 查询下次点啥菜
 meican -o 香酥  # 点包含 香酥 关键字的菜，比如香酥鸡腿
 ```
+
+
+## 版权、魔改、利益相关等
+
+最开始是因为[我司](http://www.kezaihui.com/#!/join)用的美餐服务，所以就写个简单脚本内部点餐用。
+
+License 就是宽松的 MIT 协议，欢迎各种 Fork + PR.
+
+由于每家公司的美餐服务会有不同，所以可以看看 [wujiyu115](https://github.com/wujiyu115/meican) 的实现。
+
+:wink: 最后欢迎各种 PR

@@ -12,7 +12,7 @@ setup(
     author='Lirian Su',
     author_email='liriansu@gmail.com',
     url='https://github.com/hui-z/meican',
-    license='WTFPL',
+    license='MIT License',
     entry_points={
         'console_scripts': ['meican = meican.cmdline:execute']
     },
