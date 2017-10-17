@@ -3,23 +3,12 @@ from __future__ import absolute_import, unicode_literals
 
 
 class MeiCanError(Exception):
-    """
-    啊，又出错了
-    """
-    pass
+    """ MeiCan 包产生的错误 """
 
 
 class MeiCanKeyError(MeiCanError):
-    """
-    MeiCan 接口改了
-
-    要么就是哪里写了屎代码
-
-    反正就是 dict key 不对
-    """
-    pass
+    """ MeiCan 接口更改导致的 Dict Key 错误 """
 
 
 class NoOrderAvailable(MeiCanError):
     """ 目前还点不了餐 """
-    pass
