@@ -104,7 +104,7 @@ class MeiCan(object):
 
         form_data = {'username': username, 'password': password, 'loginType': 'username', 'remember': True}
         response = self._request('post', RestUrl.login(), form_data)
-        if 200 != response.status_code:  # or '用户名或密码错误' in response.content:
+        if 200 != response.status_code or '用户名或密码错误' in response.text:
             raise MeiCanLoginFail('login fail because username or password incorrect')
 
     @property
