@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-from datetime import datetime, timedelta, timezone
 from enum import Enum
+import datetime
 
+import pytz
 import six
 
 
@@ -61,7 +62,8 @@ class Tab(ReadableObject):
         :type data: dict
         """
         self.title = data['title']
-        self.target_time = datetime.fromtimestamp(int(data['targetTime']) / 1000, tz=timezone(timedelta(hours=8)))
+        self.target_time = datetime.datetime.fromtimestamp(
+            int(data['targetTime']) / 1000, tz=pytz.timezone('Asia/Shanghai'))
         self.status = TabStatus.parse(data['status'])
         self.uid = data['userTab']['uniqueId']
         self.addresses = [Address(_) for _ in data['userTab']['corp']['addressList']]

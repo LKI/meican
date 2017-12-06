@@ -5,6 +5,7 @@ MANIFEST
 *.pyc
 *.egg-info/
 
+/.cache/
 /.idea/
 /env/
 /dist/
