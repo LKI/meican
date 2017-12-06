@@ -1,8 +1,8 @@
-# MeiCan 美餐点菜
+# MeiCan 美餐
 [![PyPI](https://img.shields.io/pypi/v/meican.svg)](https://pypi.python.org/pypi/meican)
 [![Travis](https://img.shields.io/travis/hui-z/meican.svg)](https://travis-ci.org/hui-z/meican)
 
-**非官方的Python包，支持命令行调用。**
+**兼容Python各版本+命令行调用的美餐非官方库**
 
 山上的朋友！
 树上的朋友！
@@ -14,15 +14,15 @@
 快快解放双手来点美餐吧~
 
 
-## 代码调用（推荐）
+## 安装
 
-通过pip安装：
+通过pip:
 
 ```bash
 pip install meican
 ```
 
-样例Python代码（想实现更多操作请读源码）：
+## 代码调用
 
 ```python
 from meican import MeiCan, MeiCanLoginFail, NoOrderAvailable
@@ -44,25 +44,17 @@ except MeiCanLoginFail:
 ## 命令行调用
 
 ```bash
-git clone git@github.com:hui-z/meican.git ~/.meican && cd ~/.meican && pip install -r requirements.txt  # 用git把项目克隆到本地并且安装项目依赖
-alias meican="python ~/.meican/meican/cmdline.py"
-```
-
-装好以后，
-就可以直接通过命令行调用了~
-
-```bash
 meican  # 查询下次点啥菜
 meican -o 香酥  # 点包含 香酥 关键字的菜，比如香酥鸡腿
 ```
 
 
-## 版权、魔改、利益相关等
+## 其它
 
 最开始是因为[我司](http://www.kezaihui.com/#!/join)用的美餐服务，所以就写个简单脚本内部点餐用。
 
 License 就是宽松的 MIT 协议，欢迎各种 Fork + PR.
 
-由于每家公司的美餐服务会有不同，所以可以看看 [wujiyu115](https://github.com/wujiyu115/meican) 的实现。
+各家美餐服务都有不同，也欢迎看看 [wujiyu115](https://github.com/wujiyu115/meican) 的实现。
 
 :wink: 最后欢迎各种 PR
