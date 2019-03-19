@@ -70,12 +70,13 @@ class RestUrl(object):
         return cls.get_base_url('preorder/api/v2.1/restaurants/show', data)
 
     @classmethod
-    def order(cls, dish):
+    def order(cls, dish, address_index=0):
         """
         :type dish: meican.models.Dish
+        :type address_index: int
         """
         tab = dish.restaurant.tab
-        address = tab.addresses[0]  # todo select address or error
+        address = tab.addresses[address_index]
         data = {
             'order': json.dumps([{
                 'count': '1',
@@ -85,25 +86,6 @@ class RestUrl(object):
             'targetTime': tab.target_time,
             'corpAddressUniqueId': address.uid,
             'userAddressUniqueId': address.uid,
-        }
-        return cls.get_base_url('preorder/api/v2.1/orders/add', data, wrap=False)
-
-    @classmethod
-    def order_with_pick_up(cls, dish, pick_up_id):
-        """
-        :type dish: meican.models.Dish
-        :type pick_up_id: str
-        """
-        tab = dish.restaurant.tab
-        data = {
-            'order': json.dumps([{
-                'count': '1',
-                'dishId': '{}'.format(dish.id),
-            }]),
-            'tabUniqueId': tab.uid,
-            'targetTime': tab.target_time,
-            'corpAddressUniqueId': pick_up_id,
-            'userAddressUniqueId': pick_up_id,
         }
         return cls.get_base_url('preorder/api/v2.1/orders/add', data, wrap=False)
 
@@ -177,19 +159,12 @@ class MeiCan(object):
             dishes.extend(self.get_dishes(restaurant))
         return dishes
 
-    def order(self, dish):
+    def order(self, dish, address_index=0):
         """
         :type dish: meican.models.Dish
+        :type address_index: int
         """
-        data = self.http_post(RestUrl.order(dish))
-        return data
-
-    def order_with_pick_up(self, dish, pick_up_id):
-        """
-        :type dish: meican.models.Dish
-        :type pick_up_id: str
-        """
-        data = self.http_post(RestUrl.order_with_pick_up(dish, pick_up_id))
+        data = self.http_post(RestUrl.order(dish, address_index=address_index))
         return data
 
     def http_get(self, url, **kwargs):
