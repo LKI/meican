@@ -70,13 +70,13 @@ class RestUrl(object):
         return cls.get_base_url('preorder/api/v2.1/restaurants/show', data)
 
     @classmethod
-    def order(cls, dish, address_index=0):
+    def order(cls, dish, address_uid=''):
         """
         :type dish: meican.models.Dish
-        :type address_index: int
+        :type address_uid: str
         """
         tab = dish.restaurant.tab
-        address = tab.addresses[address_index]
+        address_uid = address_uid or tab.addresses[0].uid
         data = {
             'order': json.dumps([{
                 'count': '1',
@@ -84,8 +84,8 @@ class RestUrl(object):
             }]),
             'tabUniqueId': tab.uid,
             'targetTime': tab.target_time,
-            'corpAddressUniqueId': address.uid,
-            'userAddressUniqueId': address.uid,
+            'corpAddressUniqueId': address_uid,
+            'userAddressUniqueId': address_uid,
         }
         return cls.get_base_url('preorder/api/v2.1/orders/add', data, wrap=False)
 
@@ -159,12 +159,12 @@ class MeiCan(object):
             dishes.extend(self.get_dishes(restaurant))
         return dishes
 
-    def order(self, dish, address_index=0):
+    def order(self, dish, address_uid=''):
         """
         :type dish: meican.models.Dish
-        :type address_index: int
+        :type address_uid: str
         """
-        data = self.http_post(RestUrl.order(dish, address_index=address_index))
+        data = self.http_post(RestUrl.order(dish, address_uid=address_uid))
         return data
 
     def http_get(self, url, **kwargs):
