@@ -88,6 +88,25 @@ class RestUrl(object):
         }
         return cls.get_base_url('preorder/api/v2.1/orders/add', data, wrap=False)
 
+    @classmethod
+    def order_with_pick_up(cls, dish, pick_up_id):
+        """
+        :type dish: meican.models.Dish
+        :type pick_up_id: str
+        """
+        tab = dish.restaurant.tab
+        data = {
+            'order': json.dumps([{
+                'count': '1',
+                'dishId': '{}'.format(dish.id),
+            }]),
+            'tabUniqueId': tab.uid,
+            'targetTime': tab.target_time,
+            'corpAddressUniqueId': pick_up_id,
+            'userAddressUniqueId': pick_up_id,
+        }
+        return cls.get_base_url('preorder/api/v2.1/orders/add', data, wrap=False)
+
 
 class MeiCan(object):
     def __init__(self, username, password, user_agent=None):
@@ -163,6 +182,14 @@ class MeiCan(object):
         :type dish: meican.models.Dish
         """
         data = self.http_post(RestUrl.order(dish))
+        return data
+
+    def order_with_pick_up(self, dish, pick_up_id):
+        """
+        :type dish: meican.models.Dish
+        :type pick_up_id: str
+        """
+        data = self.http_post(RestUrl.order_with_pick_up(dish, pick_up_id))
         return data
 
     def http_get(self, url, **kwargs):
