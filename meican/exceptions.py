@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
-
-
 class MeiCanError(Exception):
     """ MeiCan 包产生的错误 """
 

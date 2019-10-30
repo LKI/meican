@@ -1,19 +1,15 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
-
 from enum import Enum
 import datetime
 
 import pytz
-import six
 
 
 class TabStatus(Enum):
-    AVAIL = 'AVAILABLE'
-    CLOSED = 'CLOSED'
-    NOT_YET = 'NOT_YET'
-    UNKNOWN = 'UNKNOWN'
-    ORDERED = 'ORDERED'
+    AVAIL = "AVAILABLE"
+    CLOSED = "CLOSED"
+    NOT_YET = "NOT_YET"
+    UNKNOWN = "UNKNOWN"
+    ORDERED = "ORDERED"
 
     @classmethod
     def parse(cls, string_value):
@@ -22,17 +18,17 @@ class TabStatus(Enum):
         :rtype: TabStatus
         """
         value_enums = {
-            'AVAILABLE': cls.AVAIL,
-            'CLOSED': cls.CLOSED,
-            'NOT_YET': cls.NOT_YET,
-            'ORDER': cls.ORDERED,
+            "AVAILABLE": cls.AVAIL,
+            "CLOSED": cls.CLOSED,
+            "NOT_YET": cls.NOT_YET,
+            "ORDER": cls.ORDERED,
         }
         return value_enums.get(string_value, cls.UNKNOWN)
 
 
 class ReadableObject(object):
     def __repr__(self):
-        return six.text_type(self)
+        return str(self)
 
 
 class Address(ReadableObject):
@@ -42,12 +38,12 @@ class Address(ReadableObject):
         """
         :type data: dict
         """
-        self.uid = data['uniqueId']
-        self.address = data['address']  # 公司地址
-        self.pick_up = data['pickUpLocation']  # 取餐地址
+        self.uid = data["uniqueId"]
+        self.address = data["address"]  # 公司地址
+        self.pick_up = data["pickUpLocation"]  # 取餐地址
 
     def __repr__(self):
-        return '{} {}'.format(self.uid, self.address)
+        return "{} {}".format(self.uid, self.address)
 
 
 class Tab(ReadableObject):
@@ -61,15 +57,16 @@ class Tab(ReadableObject):
         """
         :type data: dict
         """
-        self.title = data['title']
+        self.title = data["title"]
         self.target_time = datetime.datetime.fromtimestamp(
-            int(data['targetTime']) / 1000, tz=pytz.timezone('Asia/Shanghai'))
-        self.status = TabStatus.parse(data['status'])
-        self.uid = data['userTab']['uniqueId']
-        self.addresses = [Address(_) for _ in data['userTab']['corp']['addressList']]
+            int(data["targetTime"]) / 1000, tz=pytz.timezone("Asia/Shanghai")
+        )
+        self.status = TabStatus.parse(data["status"])
+        self.uid = data["userTab"]["uniqueId"]
+        self.addresses = [Address(_) for _ in data["userTab"]["corp"]["addressList"]]
 
     def __repr__(self):
-        return '{} {} {}'.format(self.status.value, self.target_time.strftime('%Y-%m-%d'), self.title)
+        return "{} {} {}".format(self.status.value, self.target_time.strftime("%Y-%m-%d"), self.title)
 
 
 class Restaurant(ReadableObject):
@@ -81,16 +78,16 @@ class Restaurant(ReadableObject):
         :type data: dict
         """
         self.tab = tab
-        self.uid = data['uniqueId']
-        self.name = data['name']
-        self.is_open = data['open']
-        self.rating = data['rating']
-        self.tel = data['tel']
-        self.latitude = data['latitude']
-        self.longitude = data['longitude']
+        self.uid = data["uniqueId"]
+        self.name = data["name"]
+        self.is_open = data["open"]
+        self.rating = data["rating"]
+        self.tel = data["tel"]
+        self.latitude = data["latitude"]
+        self.longitude = data["longitude"]
 
     def __repr__(self):
-        return '{}'.format(self.name)
+        return "{}".format(self.name)
 
 
 class Dish(ReadableObject):
@@ -102,9 +99,9 @@ class Dish(ReadableObject):
         :type data: dict
         """
         self.restaurant = restaurant
-        self.id = int(data['id'])
-        self.name = data['name']
-        self.price = data['priceString']
+        self.id = int(data["id"])
+        self.name = data["name"]
+        self.price = data["priceString"]
 
     def __repr__(self):
-        return '{}'.format(self.name)
+        return "{}".format(self.name)

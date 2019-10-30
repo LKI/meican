@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
-
 import argparse
 import sys
 
@@ -19,8 +15,8 @@ def initialize_meican():
 def execute(argv=None):
     if argv is None:
         argv = sys.argv[1:] or []
-    parser = argparse.ArgumentParser(description='命令行点美餐的工具')
-    parser.add_argument('-o', '--order', help='order meal')
+    parser = argparse.ArgumentParser(description="命令行点美餐的工具")
+    parser.add_argument("-o", "--order", help="order meal")
     args = parser.parse_args(argv)
 
     meican = initialize_meican()
@@ -28,20 +24,20 @@ def execute(argv=None):
     try:
         dishes = meican.list_dishes()
     except NoOrderAvailable:
-        print('别急，下一顿还没开放订餐')
+        print("别急，下一顿还没开放订餐")
         return
     if args.order:
-        keyword = args.order.decode('utf-8')
+        keyword = args.order.decode("utf-8")
         dishes = [_ for _ in dishes if keyword in _.name]
         if len(dishes) == 1:
             meican.order(dishes[0])
-            print('done!')
+            print("done!")
         elif not dishes:
-            print('没有找到 {} 的对应菜品'.format(keyword))
+            print("没有找到 {} 的对应菜品".format(keyword))
         else:
-            print('找到多于一个菜品，请指定更详细的关键词')
-            print('\n'.join(['{}'.format(_) for _ in dishes]))
+            print("找到多于一个菜品，请指定更详细的关键词")
+            print("\n".join(["{}".format(_) for _ in dishes]))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     execute()

@@ -1,6 +1,0 @@
--r requirements.txt
-
-bumpversion >= 0.5.3
-pytest >= 3.2.0
-pytest-cov >= 2.5.1
-wheel >= 0.30.0

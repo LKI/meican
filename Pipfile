@@ -1,0 +1,18 @@
+[[source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple"
+verify_ssl = true
+
+[dev-packages]
+black = {version = "==19.10b0", markers = "python_version >= '3.7'"}
+bumpversion = {version = ">=0.5.3", markers = "python_version >= '3.7'"}
+pipenv = {version = ">=2018.11.26", markers = "python_version >= '3.7'"}
+pytest = ">=5.2.2"
+pytest-cov = ">=2.8.1"
+
+[packages]
+pytz = "==2019.3"
+requests = "==2.21.0"
+
+[requires]
+python_version = "3.7"

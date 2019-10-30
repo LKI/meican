@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
-
 import datetime
 import json
 import time
+from urllib.parse import urlencode
 
 import requests
-import six
 
 from meican.commands import get_dishes, get_restaurants, get_tabs
 from meican.exceptions import MeiCanError, MeiCanLoginFail, NoOrderAvailable
@@ -26,35 +23,32 @@ class RestUrl(object):
         """
         if params:
             if wrap:
-                params['noHttpGetCache'] = int(time.time() * 1000)
-            path = '{}?{}'.format(path, six.moves.urllib.parse.urlencode(sorted(params.items())))
-        return 'https://meican.com/{}'.format(path)
+                params["noHttpGetCache"] = int(time.time() * 1000)
+            path = "{}?{}".format(path, urlencode(sorted(params.items())))
+        return "https://meican.com/{}".format(path)
 
     @classmethod
     def login(cls):
-        return cls.get_base_url('account/directlogin')
+        return cls.get_base_url("account/directlogin")
 
     @classmethod
     def calender_items(cls, detail=False):
         today = datetime.date.today()
         one_week = datetime.timedelta(weeks=1)
         data = {
-            'beginDate': today.strftime('%Y-%m-%d'),
-            'endDate': (today + one_week).strftime('%Y-%m-%d'),
-            'withOrderDetail': detail,
+            "beginDate": today.strftime("%Y-%m-%d"),
+            "endDate": (today + one_week).strftime("%Y-%m-%d"),
+            "withOrderDetail": detail,
         }
-        return cls.get_base_url('preorder/api/v2.1/calendarItems/list', data)
+        return cls.get_base_url("preorder/api/v2.1/calendarItems/list", data)
 
     @classmethod
     def restaurants(cls, tab):
         """
         :type tab: meican.models.Tab
         """
-        data = {
-            'tabUniqueId': tab.uid,
-            'targetTime': tab.target_time,
-        }
-        return cls.get_base_url('preorder/api/v2.1/restaurants/list', data)
+        data = {"tabUniqueId": tab.uid, "targetTime": tab.target_time}
+        return cls.get_base_url("preorder/api/v2.1/restaurants/list", data)
 
     @classmethod
     def dishes(cls, restaurant):
@@ -62,15 +56,11 @@ class RestUrl(object):
         :type restaurant: meican.models.Restaurant
         """
         tab = restaurant.tab
-        data = {
-            'restaurantUniqueId': restaurant.uid,
-            'tabUniqueId': tab.uid,
-            'targetTime': tab.target_time,
-        }
-        return cls.get_base_url('preorder/api/v2.1/restaurants/show', data)
+        data = {"restaurantUniqueId": restaurant.uid, "tabUniqueId": tab.uid, "targetTime": tab.target_time}
+        return cls.get_base_url("preorder/api/v2.1/restaurants/show", data)
 
     @classmethod
-    def order(cls, dish, address_uid=''):
+    def order(cls, dish, address_uid=""):
         """
         :type dish: meican.models.Dish
         :type address_uid: str
@@ -78,16 +68,13 @@ class RestUrl(object):
         tab = dish.restaurant.tab
         address_uid = address_uid or tab.addresses[0].uid
         data = {
-            'order': json.dumps([{
-                'count': '1',
-                'dishId': '{}'.format(dish.id),
-            }]),
-            'tabUniqueId': tab.uid,
-            'targetTime': tab.target_time,
-            'corpAddressUniqueId': address_uid,
-            'userAddressUniqueId': address_uid,
+            "order": json.dumps([{"count": "1", "dishId": "{}".format(dish.id)}]),
+            "tabUniqueId": tab.uid,
+            "targetTime": tab.target_time,
+            "corpAddressUniqueId": address_uid,
+            "userAddressUniqueId": address_uid,
         }
-        return cls.get_base_url('preorder/api/v2.1/orders/add', data, wrap=False)
+        return cls.get_base_url("preorder/api/v2.1/orders/add", data, wrap=False)
 
 
 class MeiCan(object):
@@ -98,15 +85,15 @@ class MeiCan(object):
         """
         self.responses = []
         self._session = requests.Session()
-        user_agent = user_agent or 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
-        self._session.headers['User-Agent'] = user_agent
+        user_agent = user_agent or "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0"
+        self._session.headers["User-Agent"] = user_agent
         self._calendar_items = None
         self._tabs = None
 
-        form_data = {'username': username, 'password': password, 'loginType': 'username', 'remember': True}
-        response = self._request('post', RestUrl.login(), form_data)
-        if 200 != response.status_code or '用户名或密码错误' in response.text:
-            raise MeiCanLoginFail('login fail because username or password incorrect')
+        form_data = {"username": username, "password": password, "loginType": "username", "remember": True}
+        response = self._request("post", RestUrl.login(), form_data)
+        if 200 != response.status_code or "用户名或密码错误" in response.text:
+            raise MeiCanLoginFail("login fail because username or password incorrect")
 
     @property
     def tabs(self):
@@ -152,14 +139,14 @@ class MeiCan(object):
         """
         tab = tab or self.next_available_tab
         if not tab:
-            raise NoOrderAvailable('Currently no available orders')
+            raise NoOrderAvailable("Currently no available orders")
         restaurants = self.get_restaurants(tab)
         dishes = []
         for restaurant in restaurants:
             dishes.extend(self.get_dishes(restaurant))
         return dishes
 
-    def order(self, dish, address_uid=''):
+    def order(self, dish, address_uid=""):
         """
         :type dish: meican.models.Dish
         :type address_uid: str
@@ -172,7 +159,7 @@ class MeiCan(object):
         :type url: str | unicode
         :rtype: dict | str | unicode
         """
-        response = self._request('get', url, **kwargs)
+        response = self._request("get", url, **kwargs)
         return response.json()
 
     def http_post(self, url, data=None, **kwargs):
@@ -181,7 +168,7 @@ class MeiCan(object):
         :type data: dict
         :rtype: dict | str | unicode
         """
-        response = self._request('post', url, data, **kwargs)
+        response = self._request("post", url, data, **kwargs)
         return response.json()
 
     def _request(self, method, url, data=None, **kwargs):
@@ -194,9 +181,9 @@ class MeiCan(object):
         """
         func = getattr(self._session, method)
         response = func(url, data=data, **kwargs)  # type: requests.Response
-        response.encoding = response.encoding or 'utf-8'
+        response.encoding = response.encoding or "utf-8"
         self.responses.append(response)
         if response.status_code != 200:
             error = response.json()
-            raise MeiCanError('[{}] {}'.format(error.get('error', ''), error.get('error_description', '')))
+            raise MeiCanError("[{}] {}".format(error.get("error", ""), error.get("error_description", "")))
         return response
