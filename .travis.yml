@@ -28,7 +28,6 @@ script:
 after_success:
   - |
     if [[ ! -z "${TRAVIS_TAG}" && "${TRAVIS_PYTHON_VERSION}" == "3.7" ]]; then
-      pipenv run pip install twine wheel;
       pipenv run python setup.py sdist bdist_wheel;
       pipenv run twine upload --skip-existing dist/*;
     fi

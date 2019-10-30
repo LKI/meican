@@ -4,7 +4,7 @@ from setuptools import setup
 
 import meican
 
-with open("README.md", "rb", encoding="utf-8") as f:
+with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
 
 setup(

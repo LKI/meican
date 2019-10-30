@@ -64,14 +64,14 @@ meican -o 香酥  # 点包含 香酥 关键字的菜，比如香酥鸡腿
 不论是任何疑问、想要的功能~~还是想吃的套餐~~都欢迎[直接提 issue](https://github.com/LKI/meican/issues/new)
 
 假如你们公司是用熙香点餐的，
-[隔壁也有熙香的库噢~](/LKI/xixiang)
+[隔壁也有熙香的库噢~](https://github.com/LKI/xixiang)
 
 :wink: 欢迎各种 PR
 
 
 ## 协议
 
-宽松的 [MIT](LICENSE) 协议：
+宽松的 [MIT](https://github.com/LKI/meican/blob/master/LICENSE) 协议：
 
 - ✔ 支持各种改写
 - ✔ 支持你把代码作者都改成自己
