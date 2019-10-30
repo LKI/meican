@@ -2,7 +2,7 @@
 [![PyPI](https://img.shields.io/pypi/v/meican.svg)](https://pypi.python.org/pypi/meican)
 [![Travis](https://img.shields.io/travis/LKI/meican.svg)](https://travis-ci.org/hui-z/meican)
 
-**兼容Python各版本+命令行调用的美餐非官方库**
+> 同时支持 Python 3.5+ 与命令行调用的美餐点餐非官方库
 
 山上的朋友！
 树上的朋友！
@@ -14,6 +14,15 @@
 快快解放双手来点美餐吧~
 
 
+## 背景
+
+最开始是因为[我司](https://www.lagou.com/gongsi/j86312.html)用的美餐服务，
+所以就写了个命令行脚本内部点餐用。
+
+后来发现其实大家会有自己动手实现点单逻辑的需求，
+就做成了这个开源库啦。
+
+
 ## 安装
 
 通过pip:
@@ -21,6 +30,7 @@
 ```bash
 pip install meican
 ```
+
 
 ## 代码调用
 
@@ -49,12 +59,21 @@ meican -o 香酥  # 点包含 香酥 关键字的菜，比如香酥鸡腿
 ```
 
 
-## 其它
+## 贡献
 
-最开始是因为[我司](http://www.kezaihui.com/#!/join)用的美餐服务，所以就写个简单脚本内部点餐用。
+不论是任何疑问、想要的功能~~还是想吃的套餐~~都欢迎[直接提 issue](https://github.com/LKI/meican/issues/new)
 
-License 就是宽松的 MIT 协议，欢迎各种 Fork + PR.
+假如你们公司是用熙香点餐的，
+[隔壁也有熙香的库噢~](/LKI/xixiang)
 
-各家美餐服务都有不同，也欢迎看看 [wujiyu115](https://github.com/wujiyu115/meican) 的实现。
+:wink: 欢迎各种 PR
 
-:wink: 最后欢迎各种 PR
+
+## 协议
+
+宽松的 [MIT](LICENSE) 协议：
+
+- ✔ 支持各种改写
+- ✔ 支持你把代码作者都改成自己
+- ✖ 不支持每天中午免费吃西贝莜面村
+- ✖ 也不支持点大羊腿、掌中宝
