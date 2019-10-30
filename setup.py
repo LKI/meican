@@ -15,7 +15,7 @@ setup(
     long_description_content_type="text/markdown",
     author="Lirian Su",
     author_email="liriansu@gmail.com",
-    url="https://github.com/hui-z/meican",
+    url="https://github.com/LKI/meican",
     license="MIT License",
     entry_points={"console_scripts": ["meican = meican.cmdline:execute"]},
     packages=["meican"],
