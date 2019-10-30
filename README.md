@@ -1,6 +1,6 @@
 # MeiCan 美餐
 [![PyPI](https://img.shields.io/pypi/v/meican.svg)](https://pypi.python.org/pypi/meican)
-[![Travis](https://img.shields.io/travis/LKI/meican.svg)](https://travis-ci.org/hui-z/meican)
+[![Travis](https://img.shields.io/travis/LKI/meican.svg)](https://travis-ci.org/LKI/meican)
 
 > 同时支持 Python 3.5+ 与命令行调用的美餐点餐非官方库
 
