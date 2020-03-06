@@ -27,5 +27,4 @@ jobs:
     - name: Publish package
       uses: pypa/gh-action-pypi-publish@master
       with:
-        user: ${{ secrets.TWINE_USERNAME }}
-        password: ${{ secrets.TWINE_PASSWORD }}
+        password: ${{ secrets.pypi_token }}
