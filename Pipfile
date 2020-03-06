@@ -5,7 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 black = {version = "==19.10b0", markers = "python_version == '3.7'"}
-bumpversion = {version = ">=0.5.3", markers = "python_version == '3.7'"}
+bump2version = {version = ">=0.5.3", markers = "python_version == '3.7'"}
 pipenv = {version = ">=2018.11.26", markers = "python_version == '3.7'"}
 pytest = ">=5.2.2"
 pytest-cov = ">=2.8.1"
