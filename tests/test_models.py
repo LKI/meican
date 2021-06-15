@@ -14,7 +14,12 @@ class ModelsTests(unittest.TestCase):
             "title": "title",
             "targetTime": 1500000000000,
             "status": "CLOSED",
-            "userTab": {"uniqueId": "tab_uid", "corp": {"addressList": [self.address_data],},},
+            "userTab": {
+                "uniqueId": "tab_uid",
+                "corp": {
+                    "addressList": [self.address_data],
+                },
+            },
         }
         self.restaurant_data = {
             "uniqueId": "restaurant_uid",

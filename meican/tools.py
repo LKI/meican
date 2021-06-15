@@ -11,7 +11,7 @@ from meican.models import TabStatus
 
 
 class RestUrl(object):
-    """ 用来存储 MeiCan Rest 接口的类 """
+    """用来存储 MeiCan Rest 接口的类"""
 
     @classmethod
     def get_base_url(cls, path, params=None, wrap=True):

@@ -32,7 +32,7 @@ class ReadableObject(object):
 
 
 class Address(ReadableObject):
-    """ 地址 """
+    """地址"""
 
     def __init__(self, data):
         """
@@ -70,7 +70,7 @@ class Tab(ReadableObject):
 
 
 class Restaurant(ReadableObject):
-    """ 餐厅 """
+    """餐厅"""
 
     def __init__(self, tab, data):
         """
@@ -91,7 +91,7 @@ class Restaurant(ReadableObject):
 
 
 class Dish(ReadableObject):
-    """ 菜 """
+    """菜"""
 
     def __init__(self, restaurant, data, sections=None):
         """
@@ -112,7 +112,7 @@ class Dish(ReadableObject):
 
 
 class Section(ReadableObject):
-    """ 菜的分类 """
+    """菜的分类"""
 
     def __init__(self, data):
         """
