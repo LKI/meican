@@ -93,7 +93,7 @@ class Restaurant(ReadableObject):
 class Dish(ReadableObject):
     """ 菜 """
 
-    def __init__(self, restaurant, data):
+    def __init__(self, restaurant, data, sections=None):
         """
         :type restaurant: Restaurant
         :type data: dict
@@ -102,6 +102,24 @@ class Dish(ReadableObject):
         self.id = int(data["id"])
         self.name = data["name"]
         self.price = data["priceString"]
+        if sections and data.get("dishSectionId") in sections:
+            self.section = sections[data["dishSectionId"]]
+        else:
+            self.section = None
+
+    def __repr__(self):
+        return "{}".format(self.name)
+
+
+class Section(ReadableObject):
+    """ 菜的分类 """
+
+    def __init__(self, data):
+        """
+        :type data: dict
+        """
+        self.id = int(data["id"])
+        self.name = data["name"]
 
     def __repr__(self):
         return "{}".format(self.name)

@@ -1,4 +1,4 @@
-from meican.models import Restaurant, Tab, Dish
+from meican.models import Restaurant, Tab, Dish, Section
 
 
 def get_tabs(data):
@@ -30,9 +30,13 @@ def get_dishes(restaurant, data):
     :type data: dict
     :rtype: list[meican.models.Dish]
     """
+    sections = {}
+    for section_data in data.get("sectionList", []):
+        section = Section(section_data)
+        sections[section.id] = section
     dishes = []
     for dish_data in data["dishList"]:
         if dish_data.get("isSection", False) or dish_data.get("priceString") is None:
             continue
-        dishes.append(Dish(restaurant, dish_data))
+        dishes.append(Dish(restaurant, dish_data, sections))
     return dishes
