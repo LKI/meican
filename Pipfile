@@ -9,7 +9,6 @@ bump2version = {version = ">=0.5.3", markers = "python_version == '3.9'"}
 pipenv = {version = ">=2018.11.26", markers = "python_version == '3.9'"}
 pytest = ">=5.2.2"
 pytest-cov = ">=2.8.1"
-secretstorage = {version = ">=3", markers = "sys_platform == 'linux'"}
 twine = {version = ">=2.0.0", markers = "python_version == '3.9'"}
 wheel = {version = ">=0.33.6", markers = "python_version == '3.9'"}
 
@@ -18,4 +17,4 @@ pytz = ">=2019.3"
 requests = ">=2.21.0"
 
 [requires]
-python_version = "3.9"
+python_version = "3"

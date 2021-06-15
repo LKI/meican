@@ -2,7 +2,7 @@
 [![PyPI](https://img.shields.io/pypi/v/meican.svg)](https://pypi.python.org/pypi/meican)
 [![Build](https://github.com/LKI/meican/workflows/Build/badge.svg)](https://github.com/LKI/meican)
 
-> 同时支持 Python 3.5+ 与命令行调用的美餐点餐非官方库
+> 同时支持 Python 3.6+ 与命令行调用的美餐点餐非官方库
 
 山上的朋友！
 树上的朋友！
